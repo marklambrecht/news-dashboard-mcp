@@ -1,4 +1,4 @@
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { ApiClient } from './api-client.js';
 
 export function registerResources(server: McpServer, api: ApiClient): void {
@@ -23,7 +23,7 @@ export function registerResources(server: McpServer, api: ApiClient): void {
   // ── newsdash://feed/{feedId} ──────────────────────────────────────────────
   server.resource(
     'feed-articles',
-    new URL('newsdash://feed/{feedId}') as unknown as string,
+    new ResourceTemplate('newsdash://feed/{feedId}', { list: undefined }),
     { description: 'Articles from a specific feed. Replace {feedId} with a feed ID such as "techcrunch" or "nature".' },
     async (uri: URL) => {
       const feedId = uri.pathname.replace(/^\//, '');

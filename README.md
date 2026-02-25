@@ -26,7 +26,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
   "mcpServers": {
     "news-dashboard": {
       "command": "node",
-      "args": ["C:/Users/sbxmal/Documents/VS Code/news-dashboard/news-dashboard-mcp/dist/index.js"],
+      "args": ["C:/Users/<user>/Documents/VS Code/news-dashboard/news-dashboard-mcp/dist/index.js"],
       "env": {
         "NEWS_DASHBOARD_API_URL": "https://your-deployed-backend.com"
       }
@@ -35,7 +35,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 }
 ```
 
-For local development set `NEWS_DASHBOARD_API_URL=http://localhost:3001`.
+For local development set `NEWS_DASHBOARD_API_URL=http://localhost:3002`.
 
 ## Tools
 

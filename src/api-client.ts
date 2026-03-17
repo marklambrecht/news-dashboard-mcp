@@ -92,7 +92,7 @@ export class ApiClient {
   }
 
   async removeFeed(feedId: string): Promise<void> {
-    await this.http.delete(`/feeds/custom/${feedId}`);
+    await this.http.delete(`/feeds/custom/${encodeURIComponent(feedId)}`);
   }
 
   // Articles — fetches a single built-in or custom feed

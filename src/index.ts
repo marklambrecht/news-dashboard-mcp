@@ -10,6 +10,10 @@ import { registerArticleTools } from './tools/article.js';
 import { registerObsidianTools } from './tools/obsidian.js';
 import { registerBlueskyTools } from './tools/bluesky.js';
 import { registerSettingsTools } from './tools/settings.js';
+import { registerBookmarkTools } from './tools/bookmarks.js';
+import { registerMorningEditionTools } from './tools/morning-edition.js';
+import { registerWeeklyDigestTools } from './tools/weekly-digest.js';
+import { registerIntelligenceTools } from './tools/intelligence.js';
 import { registerResources } from './resources.js';
 import { registerPrompts } from './prompts.js';
 
@@ -22,6 +26,10 @@ function buildMcpServer(): McpServer {
   registerObsidianTools(server, api);
   registerBlueskyTools(server, api);
   registerSettingsTools(server, api);
+  registerBookmarkTools(server, api);
+  registerMorningEditionTools(server, api);
+  registerWeeklyDigestTools(server, api);
+  registerIntelligenceTools(server, api);
   registerResources(server, api);
   registerPrompts(server);
 

@@ -24,7 +24,7 @@ export function registerResources(server: McpServer, api: ApiClient): void {
   server.resource(
     'feed-articles',
     new ResourceTemplate('newsdash://feed/{feedId}', { list: undefined }),
-    { description: 'Articles from a specific feed. Replace {feedId} with a feed ID such as "techcrunch" or "nature".' },
+    { description: 'Articles from a specific feed. Replace {feedId} with a feed ID from the newsdash://feeds resource.' },
     async (uri: URL) => {
       const feedId = uri.pathname.replace(/^\//, '');
       const feeds = await api.getFeeds();

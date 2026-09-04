@@ -61,4 +61,33 @@ export function registerArticleTools(server: McpServer, api: ApiClient): void {
       };
     },
   );
+
+  // ── get_readability ────────────────────────────────────────────────────────
+  server.tool(
+    'get_readability',
+    'Fetch a distraction-free readable version of an article (title, byline, site name, excerpt, cleaned HTML ' +
+    'content, and whether it looks paywalled) using the backend\'s server-side Readability + 7-day cache. ' +
+    'Lighter weight than clip_article when you just need the reader-view text, not Markdown/frontmatter.',
+    {
+      url: z.string().url().describe('The article URL.'),
+    },
+    async ({ url }) => {
+      const result = await api.getReadability(url);
+      return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] };
+    },
+  );
+
+  // ── translate_article ─────────────────────────────────────────────────────
+  server.tool(
+    'translate_article',
+    'Translate article text to English via the backend\'s AI translation service.',
+    {
+      text: z.string().min(1).describe('The text to translate (article body or title).'),
+      url: z.string().url().optional().describe('Source article URL, for context/caching.'),
+    },
+    async ({ text, url }) => {
+      const result = await api.translateArticle(text, url);
+      return { content: [{ type: 'text', text: result.translation }] };
+    },
+  );
 }

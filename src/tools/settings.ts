@@ -45,45 +45,4 @@ export function registerSettingsTools(server: McpServer, api: ApiClient): void {
       return { content: [{ type: 'text', text: 'Settings updated successfully.' }] };
     },
   );
-
-  // ── add_feed ──────────────────────────────────────────────────────────────
-  server.tool(
-    'add_feed',
-    'Add a new custom feed. Provide either an RSS URL or a BlueSky handle (not both).',
-    {
-      displayName: z.string().min(1).describe('Human-readable name shown in the sidebar.'),
-      rssUrl: z.string().url().optional().describe('RSS/Atom feed URL for an RSS feed.'),
-      bskyHandle: z.string().optional().describe(
-        'BlueSky handle for a profile feed, e.g. "economist.com" or "@economist.com".',
-      ),
-      categories: z.array(z.string()).optional().describe(
-        'Category IDs to assign, e.g. ["biotech", "science"].',
-      ),
-    },
-    async ({ displayName, rssUrl, bskyHandle, categories }) => {
-      if (!rssUrl && !bskyHandle) {
-        return { content: [{ type: 'text', text: 'Provide either rssUrl or bskyHandle.' }], isError: true };
-      }
-      const feed = await api.addFeed(displayName, rssUrl, bskyHandle, categories);
-      return {
-        content: [{
-          type: 'text',
-          text: JSON.stringify(feed, null, 2),
-        }],
-      };
-    },
-  );
-
-  // ── remove_feed ───────────────────────────────────────────────────────────
-  server.tool(
-    'remove_feed',
-    'Remove a custom feed by its feedId. Built-in feeds cannot be removed.',
-    {
-      feedId: z.string().min(1).describe('The feedId of the custom feed to remove.'),
-    },
-    async ({ feedId }) => {
-      await api.removeFeed(feedId);
-      return { content: [{ type: 'text', text: `Feed "${feedId}" removed.` }] };
-    },
-  );
 }

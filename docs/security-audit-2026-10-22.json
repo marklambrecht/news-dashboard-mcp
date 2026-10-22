@@ -1897,16 +1897,38 @@
         "total": 0
       },
       "dependencies": {
-        "prod": 143,
-        "dev": 29,
-        "optional": 0,
+        "prod": 115,
+        "dev": 49,
+        "optional": 20,
         "peer": 0,
         "peerOptional": 0,
-        "total": 171
+        "total": 163
       }
     }
   },
   "productionAfter": {
+    "auditReportVersion": 2,
+    "vulnerabilities": {},
+    "metadata": {
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      },
+      "dependencies": {
+        "prod": 115,
+        "dev": 49,
+        "optional": 20,
+        "peer": 0,
+        "peerOptional": 0,
+        "total": 163
+      }
+    }
+  },
+  "preMigration": {
     "auditReportVersion": 2,
     "vulnerabilities": {},
     "metadata": {
@@ -1925,6 +1947,48 @@
         "peer": 0,
         "peerOptional": 0,
         "total": 171
+      }
+    }
+  },
+  "npmTested": "12.2.1",
+  "compatibility": {
+    "version": "1.0.0",
+    "name": "news-dashboard-mcp",
+    "dependencies": {
+      "@modelcontextprotocol/sdk": {
+        "version": "1.32.1",
+        "resolved": "https://registry.npmjs.org/@modelcontextprotocol/sdk/-/sdk-1.32.1.tgz",
+        "overridden": false
+      },
+      "@types/express": {
+        "version": "5.0.6",
+        "resolved": "https://registry.npmjs.org/@types/express/-/express-5.0.6.tgz",
+        "overridden": false
+      },
+      "@types/node": {
+        "version": "24.19.2",
+        "resolved": "https://registry.npmjs.org/@types/node/-/node-24.19.2.tgz",
+        "overridden": false
+      },
+      "axios": {
+        "version": "1.20.0",
+        "resolved": "https://registry.npmjs.org/axios/-/axios-1.20.0.tgz",
+        "overridden": false
+      },
+      "express": {
+        "version": "5.3.0",
+        "resolved": "https://registry.npmjs.org/express/-/express-5.3.0.tgz",
+        "overridden": false
+      },
+      "ts-node": {
+        "version": "10.9.2",
+        "resolved": "https://registry.npmjs.org/ts-node/-/ts-node-10.9.2.tgz",
+        "overridden": false
+      },
+      "typescript": {
+        "version": "7.0.2",
+        "resolved": "https://registry.npmjs.org/typescript/-/typescript-7.0.2.tgz",
+        "overridden": false
       }
     }
   }

@@ -162,3 +162,9 @@ HTTP mode binds to `127.0.0.1` and validates the Host and browser Origin headers
 Non-browser MCP clients can omit Origin. Browser clients must use a loopback
 origin on the same port. This bridge uses `NEWS_DASHBOARD_TOKEN` for its tools;
 remote access requires a separate authenticated gateway, not a public bind.
+
+## Migration validation
+
+Express 5 and TypeScript 7 are covered by `npm test`, including the localhost
+Host/Origin boundary checks. Use npm 12.2.1 with Node 24.22.1. See the
+[security and migration review](docs/security-review-2026-10-22.md).

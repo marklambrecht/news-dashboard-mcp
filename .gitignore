@@ -4,3 +4,6 @@ dist/
 *.d.ts.map
 .env
 .env.*
+
+# macOS external-volume metadata
+._*

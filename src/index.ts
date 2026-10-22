@@ -2,7 +2,8 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { randomUUID } from 'crypto';
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
+import { createMcpExpressApp } from '@modelcontextprotocol/sdk/server/express.js';
 
 import { ApiClient } from './api-client.js';
 import { registerFeedTools } from './tools/feeds.js';
@@ -44,8 +45,21 @@ function buildMcpServer(): McpServer {
 // DELETE /mcp — client closes a session
 // ─────────────────────────────────────────────────────────────────────────────
 async function startHttpServer(port: number): Promise<void> {
-  const app = express();
-  app.use(express.json());
+  // This local bridge uses the user's backend token. Keep it off the LAN and
+  // reject browser origins/DNS rebinding before any tool can use that token.
+  const app = createMcpExpressApp({ host: '127.0.0.1' });
+  app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (origin) {
+      try {
+        const url = new URL(origin);
+        if (url.protocol !== 'http:' || !['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname) || url.port !== String(port)) {
+          res.status(403).json({ error: 'Origin not allowed' }); return;
+        }
+      } catch { res.status(403).json({ error: 'Invalid origin' }); return; }
+    }
+    next();
+  });
 
   const transports = new Map<string, StreamableHTTPServerTransport>();
 
@@ -93,7 +107,7 @@ async function startHttpServer(port: number): Promise<void> {
 
   app.get('/health', (_req: Request, res: Response) => res.json({ ok: true, server: 'news-dashboard-mcp' }));
 
-  app.listen(port, () => {
+  app.listen(port, '127.0.0.1', () => {
     process.stderr.write(
       `news-dashboard MCP server (HTTP) listening on http://localhost:${port}/mcp\n` +
       `Backend API: ${process.env.NEWS_DASHBOARD_API_URL ?? 'http://localhost:3001'}\n`,
@@ -109,7 +123,8 @@ async function startStdioServer(): Promise<void> {
 }
 
 // ── Entry point ──────────────────────────────────────────────────────────────
-const httpPort = process.env.HTTP_PORT ? parseInt(process.env.HTTP_PORT, 10) : null;
+const httpPort = process.env.HTTP_PORT ? Number(process.env.HTTP_PORT) : null;
+if (httpPort !== null && (!Number.isInteger(httpPort) || httpPort < 1 || httpPort > 65535)) throw new Error('HTTP_PORT must be an integer between 1 and 65535');
 
 if (httpPort !== null) {
   startHttpServer(httpPort).catch((err: Error) => {

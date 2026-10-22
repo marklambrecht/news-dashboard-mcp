@@ -7,7 +7,7 @@ Obsidian notes, and post to BlueSky.
 
 ## Requirements
 
-- Node.js 20+
+- Node.js 24.22.1 or later in the 24.x line (`nvm use`)
 - The `news-dashboard-nest` backend running and reachable
 - A valid JWT access token for a registered user (see **Authentication** below) — the
   backend requires a signed-in user for almost every route.
@@ -155,3 +155,10 @@ bookmarklet flow.
 
 **Find and share:**
 > "Find the most recent FDA approval news and post it to BlueSky"
+
+## Local HTTP security
+
+HTTP mode binds to `127.0.0.1` and validates the Host and browser Origin headers.
+Non-browser MCP clients can omit Origin. Browser clients must use a loopback
+origin on the same port. This bridge uses `NEWS_DASHBOARD_TOKEN` for its tools;
+remote access requires a separate authenticated gateway, not a public bind.

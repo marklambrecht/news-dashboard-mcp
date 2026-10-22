@@ -1,26 +1,27 @@
 {
   "name": "news-dashboard-mcp",
   "version": "1.0.0",
-  "description": "MCP server for the news-dashboard app — read feeds, clip articles, save to Obsidian, post to BlueSky",
+  "description": "MCP server for the news-dashboard app \u2014 read feeds, clip articles, save to Obsidian, post to BlueSky",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
     "start:http": "node dist/index.js",
-    "dev": "ts-node src/index.ts"
+    "dev": "ts-node src/index.ts",
+    "test": "npm run build && node --test tests/*.test.cjs"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.6.1",
-    "axios": "^1.7.9",
-    "express": "^4.21.2"
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "axios": "^1.20.0",
+    "express": "^4.22.3"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
-    "@types/node": "^20.0.0",
+    "@types/node": "^24.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
   "engines": {
-    "node": ">=20"
+    "node": "^24.22.1"
   }
 }
